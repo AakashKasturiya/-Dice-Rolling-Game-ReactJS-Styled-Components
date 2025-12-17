@@ -1,10 +1,12 @@
 import styled from "styled-components";
+import Dice from 'react-dice-roll';
+
 
 import { Button } from "../styled/Button";
 import { OutlineButton } from "../styled/Button";
 import { useState } from "react";
 
-export const GameLayout = ({ animating, GameStart, rollDice, setShowInstruction, setScore, resetScoreHandler }) => {
+export const GameLayout = ({ GameStart, setShowInstruction, resetScoreHandler, selectedNumber, error }) => {
   const [show, setShow] = useState('Show'); // State for toggle text
   const [isInstructionVisible, setIsInstructionVisible] = useState(false); // State to control instructions visibility
 
@@ -21,10 +23,13 @@ export const GameLayout = ({ animating, GameStart, rollDice, setShowInstruction,
   return (
     <Section>
       <GameLayoutWrapper>
-        <div onClick={GameStart}>
-          <div className="image-container">
-            <img src={rollDice} alt={rollDice} className={`image ${animating ? 'image-roll' : ''}`} />
-          </div>
+        <div className="dice-container" onClick={(e) => {
+          if (!selectedNumber) {
+            GameStart(); // Trigger validation
+            e.stopPropagation(); // Prevent dice roll if invalid
+          }
+        }}>
+          <Dice onRoll={GameStart} size={150} triggers={selectedNumber ? ['click'] : []} />
         </div>
         <h3>Click on Dice to roll</h3>
         <OutlineButton onClick={resetScoreHandler}>Reset Score</OutlineButton>
@@ -56,34 +61,9 @@ const GameLayoutWrapper = styled.div`
     line-height: 36px;
     text-align: center;
   }
-  .image-container {
-  width: 200px;
-  height: 200px;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 1s ease-out; /* Smooth transition */
-}
-
-.image-roll {
-  animation: roll 1s ease-out;
-}
-
-@keyframes roll {
-  0% {
-    transform: rotate(0deg);
+  .dice-container {
+    margin-top: 48px;
   }
-  50% {
-    transform: rotate(180deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+
 
 `;
