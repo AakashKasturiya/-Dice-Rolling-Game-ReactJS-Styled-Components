@@ -19,6 +19,7 @@ export const SelecteNumber = ({
           <Box
             key={index}
             $isSelected={value === selectedNumber}
+            $error={error}
             onClick={() => numberSelectorHandler(value)}>
             {value}
           </Box>
@@ -50,13 +51,13 @@ const Box = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #000000;
+  border: 1px solid ${(props) => (props.$error ? "red" : "#000000")};
   font-size: 24px;
   line-height: 36px;
   font-weight: 500;
   cursor: pointer;
   background-color: ${(props) => (props.$isSelected ? "black" : "white")};
-  color: ${(props) => (!props.$isSelected ? "#000000" : "#ffffff")};
+  color: ${(props) => (props.$isSelected ? "white" : (props.$error ? "red" : "black"))};
 
   &:hover {
     background-color: ${(props) => (props.$isSelected ? "black" : "black")};

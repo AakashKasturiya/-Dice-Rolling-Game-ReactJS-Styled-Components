@@ -1,9 +1,29 @@
+.click-on-dice {
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 500;
+}
 
+/* Override dice styles to fix UI issues */
+._space3d ._3dface {
+  background-size: 100% 100% !important;
+  backface-visibility: hidden !important;
+  box-shadow: none !important;
+  border-radius: 20px !important;
+  /* Optional: nicer corners */
+}
+
+._space3d .defaultFace {
+  background-color: transparent !important;
+  /* Ensure transparent background if needed */
+  box-shadow: none !important;
+}
 
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
